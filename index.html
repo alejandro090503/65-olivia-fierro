@@ -447,81 +447,104 @@ footer .fc a{color:inherit;text-decoration:none;}
 /* ── INTRO SCREEN ── */
 #envelope-screen{
   position:fixed;inset:0;z-index:10000;overflow:hidden;cursor:pointer;
-  opacity:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  background:radial-gradient(ellipse at 50% 40%, #5A1828 0%, #3D1218 50%, #1A080F 100%);
+  opacity:0;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(150deg,#1A080F 0%,#2E0E18 45%,#140608 100%);
 }
+/* partículas flotantes de fondo */
+#ei-particles{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.ei-p{position:absolute;border-radius:50%;background:#B8924A;opacity:0;}
+
 #env-flash{position:fixed;inset:0;background:var(--bg);z-index:9999;opacity:0;pointer-events:none;}
 
-/* Esquinas ornamentales */
-.ei-corner{position:absolute;width:52px;height:52px;opacity:.45;}
-.ei-corner svg{width:100%;height:100%;}
-.ei-corner--tl{top:22px;left:22px;}
-.ei-corner--tr{top:22px;right:22px;transform:scaleX(-1);}
-.ei-corner--bl{bottom:22px;left:22px;transform:scaleY(-1);}
-.ei-corner--br{bottom:22px;right:22px;transform:scale(-1);}
-
-/* Anillo ornamental */
-.ei-ring-wrap{
-  position:relative;display:flex;align-items:center;justify-content:center;
-  width:240px;height:240px;flex-shrink:0;
+/* ── Tarjeta ── */
+.ei-card{
+  position:relative;
+  width:min(320px,84vw);
+  background:linear-gradient(170deg,#FDFAF3 0%,#F5EDD8 100%);
+  border-radius:2px;
+  border:1px solid rgba(184,146,74,.7);
+  box-shadow:
+    0 0 0 5px rgba(184,146,74,.10),
+    0 0 0 6px rgba(184,146,74,.06),
+    0 28px 90px rgba(0,0,0,.75),
+    inset 0 0 50px rgba(184,146,74,.05);
+  padding:32px 28px 26px;
+  text-align:center;
+  opacity:0;
 }
-.ei-ring{
-  position:absolute;inset:0;border-radius:50%;
-  border:1px solid rgba(184,146,74,.55);
-  box-shadow:0 0 0 7px rgba(184,146,74,.06),inset 0 0 40px rgba(184,146,74,.04);
+/* borde interior doble */
+.ei-card::before{
+  content:'';position:absolute;inset:7px;
+  border:1px solid rgba(184,146,74,.30);
+  pointer-events:none;
 }
-.ei-ring::before{
-  content:'';position:absolute;inset:10px;border-radius:50%;
-  border:1px dashed rgba(184,146,74,.25);
-}
-/* 4 diamantes en las posiciones cardinales del anillo */
-.ei-diamond{
-  position:absolute;width:8px;height:8px;
-  background:var(--gold);
-  transform:rotate(45deg);
-  box-shadow:0 0 6px rgba(184,146,74,.7);
-}
-.ei-diamond:nth-child(1){top:-4px;left:calc(50% - 4px);}
-.ei-diamond:nth-child(2){bottom:-4px;left:calc(50% - 4px);}
-.ei-diamond:nth-child(3){left:-4px;top:calc(50% - 4px);}
-.ei-diamond:nth-child(4){right:-4px;top:calc(50% - 4px);}
-
-/* Monograma */
-.ei-letter{
-  font-family:'Cormorant Garamond',serif;font-weight:300;font-size:148px;line-height:1;
-  color:#D4AE78;
-  text-shadow:0 0 80px rgba(184,146,74,.65),0 0 24px rgba(184,146,74,.35),0 2px 4px rgba(0,0,0,.6);
-  user-select:none;
+/* brillo superior */
+.ei-card::after{
+  content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent);
 }
 
-/* Línea y texto debajo del anillo */
-.ei-divider{
-  width:1px;height:44px;margin:12px auto;
-  background:linear-gradient(to bottom,rgba(184,146,74,.6),transparent);
+/* ornamento de uva en la tarjeta */
+.ei-card-orn{display:flex;justify-content:center;margin-bottom:16px;}
+.ei-card-orn svg{width:120px;height:28px;}
+
+/* líneas decorativas */
+.ei-rule{
+  display:flex;align-items:center;gap:10px;margin:14px 0;
 }
-.ei-name{
-  font-family:'Great Vibes',cursive;font-size:46px;line-height:1;
-  color:rgba(212,174,120,.92);
-  text-shadow:0 0 30px rgba(184,146,74,.35);
+.ei-rule-line{flex:1;height:1px;background:linear-gradient(to right,transparent,rgba(184,146,74,.5));}
+.ei-rule-line.r{background:linear-gradient(to left,transparent,rgba(184,146,74,.5));}
+.ei-rule-gem{
+  width:6px;height:6px;background:var(--gold);
+  transform:rotate(45deg);flex-shrink:0;
+  box-shadow:0 0 5px rgba(184,146,74,.6);
 }
-.ei-years{
+
+/* tipografía de la tarjeta */
+.ei-card-eyebrow{
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:13px;letter-spacing:6px;text-transform:uppercase;
-  color:rgba(184,146,74,.65);margin-top:10px;
+  font-size:11px;letter-spacing:5px;text-transform:uppercase;
+  color:var(--gold);margin-bottom:6px;
+}
+.ei-card-num{
+  font-family:'Cormorant Garamond',serif;font-weight:300;
+  font-size:clamp(80px,22vw,96px);line-height:.9;letter-spacing:-3px;
+  color:var(--dark);
+  text-shadow:0 2px 0 rgba(184,146,74,.18);
+}
+.ei-card-name{
+  font-family:'Great Vibes',cursive;font-size:clamp(36px,10vw,44px);line-height:1.1;
+  color:var(--accent);margin-top:4px;
+}
+.ei-card-phrase{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:13px;letter-spacing:1px;color:var(--text);
+  opacity:.75;margin:0;
+}
+.ei-card-date{
+  font-family:'Cormorant Garamond',serif;font-weight:400;
+  font-size:12px;letter-spacing:4px;text-transform:uppercase;
+  color:var(--dark);
+}
+.ei-card-city{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:11px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--gold);margin-top:2px;
 }
 
-/* Hint */
+/* hint dentro de la tarjeta */
 .envelope-hint{
-  position:absolute;bottom:52px;left:50%;transform:translateX(-50%);
-  font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:5px;text-transform:uppercase;
-  color:rgba(212,174,120,.85);opacity:0;cursor:pointer;white-space:nowrap;z-index:10;
+  display:block;margin-top:18px;
+  font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:5px;
+  text-transform:uppercase;color:var(--gold);opacity:0;
+  cursor:pointer;
 }
 .envelope-hint::after{
-  content:'';display:block;width:32px;height:1px;
+  content:'';display:block;width:28px;height:1px;
   background:linear-gradient(90deg,transparent,rgba(184,146,74,.7),transparent);
-  margin:10px auto 0;animation:hintPulse 2.2s ease-in-out infinite;
+  margin:8px auto 0;animation:hintPulse 2.2s ease-in-out infinite;
 }
-@keyframes hintPulse{0%,100%{opacity:.4;width:32px;}50%{opacity:1;width:54px;}}
+@keyframes hintPulse{0%,100%{opacity:.35;width:28px;}50%{opacity:1;width:48px;}}
 #loader{display:none;}
 </style>
 </head>
@@ -529,45 +552,58 @@ footer .fc a{color:inherit;text-decoration:none;}
 
 <!-- INTRO SCREEN -->
 <div id="envelope-screen" role="button" aria-label="Toca para abrir tu invitación">
+  <div id="ei-particles" aria-hidden="true"></div>
 
-  <!-- Esquinas ornamentales -->
-  <svg class="ei-corner ei-corner--tl" viewBox="0 0 52 52" fill="none" aria-hidden="true">
-    <path d="M2 50 L2 2 L50 2" stroke="#B8924A" stroke-width="1" fill="none"/>
-    <path d="M2 2 L14 2 M2 2 L2 14" stroke="#B8924A" stroke-width="1.5" fill="none"/>
-    <circle cx="2" cy="2" r="2.5" fill="#B8924A" opacity=".7"/>
-  </svg>
-  <svg class="ei-corner ei-corner--tr" viewBox="0 0 52 52" fill="none" aria-hidden="true">
-    <path d="M2 50 L2 2 L50 2" stroke="#B8924A" stroke-width="1" fill="none"/>
-    <path d="M2 2 L14 2 M2 2 L2 14" stroke="#B8924A" stroke-width="1.5" fill="none"/>
-    <circle cx="2" cy="2" r="2.5" fill="#B8924A" opacity=".7"/>
-  </svg>
-  <svg class="ei-corner ei-corner--bl" viewBox="0 0 52 52" fill="none" aria-hidden="true">
-    <path d="M2 50 L2 2 L50 2" stroke="#B8924A" stroke-width="1" fill="none"/>
-    <path d="M2 2 L14 2 M2 2 L2 14" stroke="#B8924A" stroke-width="1.5" fill="none"/>
-    <circle cx="2" cy="2" r="2.5" fill="#B8924A" opacity=".7"/>
-  </svg>
-  <svg class="ei-corner ei-corner--br" viewBox="0 0 52 52" fill="none" aria-hidden="true">
-    <path d="M2 50 L2 2 L50 2" stroke="#B8924A" stroke-width="1" fill="none"/>
-    <path d="M2 2 L14 2 M2 2 L2 14" stroke="#B8924A" stroke-width="1.5" fill="none"/>
-    <circle cx="2" cy="2" r="2.5" fill="#B8924A" opacity=".7"/>
-  </svg>
+  <div class="ei-card" id="ei-card">
 
-  <!-- Anillo + monograma -->
-  <div class="ei-ring-wrap" id="ei-ring-wrap">
-    <div class="ei-ring" id="ei-ring">
-      <span class="ei-diamond"></span>
-      <span class="ei-diamond"></span>
-      <span class="ei-diamond"></span>
-      <span class="ei-diamond"></span>
+    <!-- Ornamento de uva -->
+    <div class="ei-card-orn" id="ei-orn">
+      <svg viewBox="0 0 120 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M4 14 Q22 7 44 12 Q54 15 60 13" stroke="#B8924A" stroke-width=".9" opacity=".6" fill="none"/>
+        <path d="M116 14 Q98 7 76 12 Q66 15 60 13" stroke="#B8924A" stroke-width=".9" opacity=".6" fill="none"/>
+        <circle cx="60" cy="7"  r="4"   fill="#7B1F3A" opacity=".8"/>
+        <circle cx="54" cy="14" r="4"   fill="#7B1F3A" opacity=".8"/>
+        <circle cx="66" cy="14" r="4"   fill="#7B1F3A" opacity=".8"/>
+        <circle cx="60" cy="21" r="3.5" fill="#7B1F3A" opacity=".6"/>
+        <path d="M60 3 Q62 1 65 0" stroke="#B8924A" stroke-width=".8" fill="none"/>
+        <path d="M60 3 Q56 1 53 2 Q55 5 59 3 Z" fill="#5A3A20" opacity=".55"/>
+      </svg>
     </div>
-    <span class="ei-letter" id="ei-letter">O</span>
+
+    <!-- Eyebrow -->
+    <div class="ei-card-eyebrow" id="ei-eyebrow">Mexicali, B.C. · 2026</div>
+
+    <!-- Línea -->
+    <div class="ei-rule" id="ei-rule1">
+      <span class="ei-rule-line"></span>
+      <span class="ei-rule-gem"></span>
+      <span class="ei-rule-line r"></span>
+    </div>
+
+    <!-- Número -->
+    <div class="ei-card-num" id="ei-num">65</div>
+
+    <!-- Nombre -->
+    <div class="ei-card-name" id="ei-name">Olivia Fierro</div>
+
+    <!-- Línea -->
+    <div class="ei-rule" id="ei-rule2">
+      <span class="ei-rule-line"></span>
+      <span class="ei-rule-gem"></span>
+      <span class="ei-rule-line r"></span>
+    </div>
+
+    <!-- Frase -->
+    <p class="ei-card-phrase" id="ei-phrase">Cumpliendo mis sueños</p>
+
+    <!-- Fecha y ciudad -->
+    <div class="ei-card-date" id="ei-date" style="margin-top:14px;">26 · Junio · 2026</div>
+    <div class="ei-card-city" id="ei-city">Plaza Fimbres · 8:00 pm</div>
+
+    <!-- Hint -->
+    <p class="envelope-hint" id="env-hint">Toca para abrir</p>
+
   </div>
-
-  <div class="ei-divider" id="ei-divider"></div>
-  <div class="ei-name" id="ei-name">Olivia</div>
-  <div class="ei-years" id="ei-years">65 años</div>
-
-  <p class="envelope-hint" id="env-hint">Toca para abrir</p>
 </div>
 <div id="env-flash"></div>
 
@@ -1115,42 +1151,65 @@ gsap.registerPlugin(ScrollTrigger);
 (function(){
   var envScreen = document.getElementById('envelope-screen');
   var envFlash  = document.getElementById('env-flash');
+  var card      = document.getElementById('ei-card');
   var hint      = document.getElementById('env-hint');
-  var ringWrap  = document.getElementById('ei-ring-wrap');
-  var ring      = document.getElementById('ei-ring');
-  var letter    = document.getElementById('ei-letter');
-  var divider   = document.getElementById('ei-divider');
+  var orn       = document.getElementById('ei-orn');
+  var eyebrow   = document.getElementById('ei-eyebrow');
+  var rule1     = document.getElementById('ei-rule1');
+  var rule2     = document.getElementById('ei-rule2');
+  var numEl     = document.getElementById('ei-num');
   var nameEl    = document.getElementById('ei-name');
-  var yearsEl   = document.getElementById('ei-years');
-  var corners   = document.querySelectorAll('.ei-corner');
-  var diamonds  = document.querySelectorAll('.ei-diamond');
+  var phrase    = document.getElementById('ei-phrase');
+  var dateEl    = document.getElementById('ei-date');
+  var cityEl    = document.getElementById('ei-city');
   var opened    = false;
 
+  /* ── Partículas de polvo dorado ── */
+  var pLayer = document.getElementById('ei-particles');
+  for(var pi = 0; pi < 18; pi++){
+    (function(){
+      var p = document.createElement('div');
+      p.className = 'ei-p';
+      var sz = 2 + Math.random() * 3;
+      p.style.cssText = 'width:'+sz+'px;height:'+sz+'px;left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;';
+      pLayer.appendChild(p);
+      gsap.to(p, {
+        opacity: 0.12 + Math.random()*0.22,
+        y: -(40 + Math.random()*60),
+        duration: 5 + Math.random()*6,
+        delay: Math.random()*4,
+        ease:'none', repeat:-1, yoyo:true
+      });
+    })();
+  }
+
   /* ── Entrada ── */
-  gsap.set([ringWrap, divider, nameEl, yearsEl, hint, corners], {opacity:0});
-  gsap.set(letter,  {scale:0.6, opacity:0});
-  gsap.set(ring,    {scale:0.7, opacity:0});
-  gsap.set(diamonds,{scale:0, opacity:0});
+  gsap.set(card,    {opacity:0, y:24, scale:0.94});
+  gsap.set([orn, eyebrow, rule1, rule2, numEl, nameEl, phrase, dateEl, cityEl, hint],
+           {opacity:0, y:12});
 
-  var tl = gsap.timeline({delay:0.25});
-  tl.to(envScreen, {opacity:1, duration:0.8, ease:'power2.out'})
-    .to(corners,   {opacity:.45, duration:0.6, stagger:0.08, ease:'power2.out'}, '-=0.3')
-    .to(ring,      {scale:1, opacity:1, duration:1.1, ease:'back.out(1.6)'}, '-=0.2')
-    .to(diamonds,  {scale:1, opacity:1, duration:0.5, stagger:0.07, ease:'back.out(2)'}, '-=0.6')
-    .to(letter,    {scale:1, opacity:1, duration:1.0, ease:'back.out(1.4)'}, '-=0.7')
-    .to(divider,   {opacity:1, duration:0.7, ease:'power2.out'}, '-=0.2')
-    .to(nameEl,    {opacity:1, duration:0.8, ease:'power2.out'}, '-=0.4')
-    .to(yearsEl,   {opacity:1, duration:0.6, ease:'power2.out'}, '-=0.4')
-    .to(hint,      {opacity:1, duration:0.7, ease:'power2.out'}, '-=0.2');
+  var tl = gsap.timeline({delay:0.3});
+  tl.to(envScreen, {opacity:1, duration:0.9, ease:'power2.out'})
+    .to(card,    {opacity:1, y:0, scale:1, duration:1.1, ease:'power3.out'}, '-=0.4')
+    .to(orn,     {opacity:1, y:0, duration:0.7, ease:'power2.out'}, '-=0.3')
+    .to(eyebrow, {opacity:1, y:0, duration:0.6, ease:'power2.out'}, '-=0.4')
+    .to(rule1,   {opacity:1, y:0, duration:0.5, ease:'power2.out'}, '-=0.3')
+    .to(numEl,   {opacity:1, y:0, duration:0.9, ease:'power3.out'}, '-=0.3')
+    .to(nameEl,  {opacity:1, y:0, duration:0.8, ease:'power2.out'}, '-=0.5')
+    .to(rule2,   {opacity:1, y:0, duration:0.5, ease:'power2.out'}, '-=0.4')
+    .to(phrase,  {opacity:1, y:0, duration:0.6, ease:'power2.out'}, '-=0.3')
+    .to(dateEl,  {opacity:1, y:0, duration:0.5, ease:'power2.out'}, '-=0.3')
+    .to(cityEl,  {opacity:1, y:0, duration:0.5, ease:'power2.out'}, '-=0.35')
+    .to(hint,    {opacity:1, y:0, duration:0.6, ease:'power2.out'}, '-=0.2');
 
-  /* Pulso sutil en la letra O */
-  tl.to(letter, {
-    textShadow:'0 0 120px rgba(184,146,74,.9),0 0 40px rgba(184,146,74,.55),0 2px 4px rgba(0,0,0,.6)',
-    duration:1.8, ease:'sine.inOut', repeat:-1, yoyo:true
-  }, '+=0.2');
+  /* Shimmer sutil en el número */
+  tl.to(numEl, {
+    textShadow:'0 2px 0 rgba(184,146,74,.35)',
+    duration:2, ease:'sine.inOut', repeat:-1, yoyo:true
+  }, '+=0.3');
 
-  /* Hint bounce */
-  gsap.to(hint, {y:-5, duration:1.4, ease:'sine.inOut', repeat:-1, yoyo:true, delay:3.5});
+  /* Hint hover suave */
+  gsap.to(hint, {opacity:.55, duration:1.2, ease:'sine.inOut', repeat:-1, yoyo:true, delay:4});
 
   /* ── Salida al tocar ── */
   function revealInvitation(){
@@ -1168,13 +1227,10 @@ gsap.registerPlugin(ScrollTrigger);
   function openEnvelope(){
     if(opened) return;
     opened = true;
-    gsap.killTweensOf([hint, letter, ring, nameEl, yearsEl]);
-    gsap.to(hint,    {opacity:0, duration:0.2});
-    gsap.to([nameEl, yearsEl, divider, corners], {opacity:0, duration:0.35, ease:'power2.in'});
-    gsap.to(ring,    {scale:1.5, opacity:0, duration:0.55, ease:'power2.in'});
-    gsap.to(diamonds,{scale:0,   opacity:0, duration:0.3,  stagger:0.05, ease:'power2.in'});
-    gsap.to(letter,  {scale:1.6, opacity:0, duration:0.6,  ease:'power2.in', delay:0.05});
-    gsap.to(envFlash,{opacity:1, duration:0.55, delay:0.5, ease:'power2.in', onComplete: revealInvitation});
+    gsap.killTweensOf([card, hint, numEl, nameEl]);
+    gsap.to(card,     {scale:1.04, opacity:0, y:-16, duration:0.55, ease:'power2.in'});
+    gsap.to(envFlash, {opacity:1, duration:0.5, delay:0.35, ease:'power2.in',
+      onComplete: revealInvitation});
   }
 
   envScreen.addEventListener('click', openEnvelope);
