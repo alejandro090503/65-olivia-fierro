@@ -400,18 +400,18 @@ section{padding:60px 26px;}
 
 /* ── ITINERARIO VINO ── */
 .wine-tl-outer{max-width:340px;margin:0 auto;padding:0 8px;}
-.wine-top{display:flex;justify-content:center;margin-bottom:0;}
+.wine-top{display:flex;justify-content:flex-start;margin-bottom:0;}
 @keyframes wine-pour{
   0%   {transform:rotate(6deg);}
-  40%  {transform:rotate(50deg);}
-  64%  {transform:rotate(50deg);}
+  42%  {transform:rotate(-6deg);}
+  66%  {transform:rotate(-6deg);}
   100% {transform:rotate(6deg);}
 }
 .wine-btl-svg{
   width:66px;height:auto;
-  transform-origin:bottom center;
+  transform-origin:top center;
   filter:drop-shadow(0 8px 22px rgba(123,31,58,.38));
-  animation:wine-pour 3.4s ease-in-out infinite;
+  animation:wine-pour 3.2s ease-in-out infinite;
 }
 .wine-drip{
   width:3px;height:26px;
@@ -967,25 +967,30 @@ footer .fc a{color:inherit;text-decoration:none;}
       <!-- Botella decorativa -->
       <div class="wine-top">
         <svg class="wine-btl-svg" viewBox="0 0 56 170" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <!-- Corcho -->
-          <rect x="20" y="0" width="16" height="12" rx="3" fill="#C4A870"/>
-          <rect x="22" y="2" width="12" height="8" rx="2" fill="#D4BA80" opacity=".45"/>
-          <!-- Cuello -->
-          <path d="M21 11 L21 46 Q21 52 17 57 L39 57 Q35 52 35 46 L35 11 Z" fill="#621626"/>
-          <path d="M27 12 L27 49" stroke="rgba(255,255,255,.09)" stroke-width="2.5" stroke-linecap="round"/>
-          <!-- Hombro -->
-          <path d="M17 57 Q9 70 7 82 L49 82 Q47 70 39 57 Z" fill="#7B1F3A"/>
+          <!-- Base redonda (arriba, sostenida en mano) -->
+          <ellipse cx="28" cy="5" rx="21" ry="5" fill="#5A1020"/>
+          <ellipse cx="28" cy="4" rx="18" ry="3" fill="#6B1828" opacity=".6"/>
           <!-- Cuerpo -->
-          <rect x="7" y="82" width="42" height="84" rx="5" fill="#7B1F3A"/>
+          <rect x="7" y="5" width="42" height="80" rx="4" fill="#7B1F3A"/>
           <!-- Etiqueta -->
-          <rect x="11" y="90" width="34" height="52" rx="3" fill="#F5EDD8" opacity=".93"/>
-          <line x1="16" y1="98" x2="40" y2="98" stroke="#B8924A" stroke-width=".9" opacity=".55"/>
-          <text x="28" y="111" text-anchor="middle" font-family="Georgia,serif" font-size="8.5" fill="#7B1F3A" font-weight="bold">Oly</text>
-          <text x="28" y="121" text-anchor="middle" font-family="Georgia,serif" font-size="5.5" fill="#B8924A" letter-spacing="1">65 años</text>
-          <line x1="16" y1="126" x2="40" y2="126" stroke="#B8924A" stroke-width=".9" opacity=".55"/>
-          <text x="28" y="134" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" fill="#7B1F3A" letter-spacing="2">2026</text>
+          <rect x="11" y="10" width="34" height="52" rx="3" fill="#F5EDD8" opacity=".93"/>
+          <line x1="16" y1="18" x2="40" y2="18" stroke="#B8924A" stroke-width=".9" opacity=".55"/>
+          <text x="28" y="31" text-anchor="middle" font-family="Georgia,serif" font-size="8.5" fill="#7B1F3A" font-weight="bold">Oly</text>
+          <text x="28" y="41" text-anchor="middle" font-family="Georgia,serif" font-size="5.5" fill="#B8924A" letter-spacing="1">65 años</text>
+          <line x1="16" y1="46" x2="40" y2="46" stroke="#B8924A" stroke-width=".9" opacity=".55"/>
+          <text x="28" y="55" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" fill="#7B1F3A" letter-spacing="2">2026</text>
           <!-- Reflejo -->
-          <path d="M13 86 L13 160" stroke="white" stroke-width="3.5" opacity=".07" stroke-linecap="round"/>
+          <path d="M13 8 L13 78" stroke="white" stroke-width="3.5" opacity=".07" stroke-linecap="round"/>
+          <!-- Hombro (se estrecha hacia abajo) -->
+          <path d="M7 85 Q9 100 17 106 L39 106 Q47 100 49 85 Z" fill="#7B1F3A"/>
+          <!-- Cuello -->
+          <path d="M17 106 L17 152 Q17 157 21 159 L35 159 Q39 157 39 152 L39 106 Z" fill="#621626"/>
+          <path d="M28 108 L28 150" stroke="rgba(255,255,255,.09)" stroke-width="2" stroke-linecap="round"/>
+          <!-- Boca / apertura -->
+          <ellipse cx="28" cy="159" rx="7" ry="3" fill="#4A0E1A"/>
+          <ellipse cx="28" cy="158" rx="5" ry="2" fill="#3A0D15" opacity=".5"/>
+          <!-- Gotita de vino -->
+          <path d="M28 162 Q25.5 167 28 170 Q30.5 167 28 162 Z" fill="#7B1F3A" opacity=".85"/>
         </svg>
       </div>
 
