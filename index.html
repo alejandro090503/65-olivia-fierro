@@ -398,32 +398,62 @@ section{padding:60px 26px;}
 .btn-decline:hover{border-color:rgba(123,31,58,.6);}
 .rsvp-deadline{text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--text);margin-top:16px;}
 
-/* ── ITINERARIO ── */
-.tl-wrap{max-width:320px;margin:0 auto;}
-.tl-item{display:flex;align-items:flex-start;position:relative;}
-.tl-time{
-  width:78px;text-align:right;padding-right:18px;padding-top:3px;flex-shrink:0;
-  font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:1px;
-  color:var(--gold);font-weight:500;line-height:1.2;
+/* ── ITINERARIO VINO ── */
+.wine-tl-outer{max-width:340px;margin:0 auto;padding:0 8px;}
+.wine-top{display:flex;justify-content:center;margin-bottom:0;}
+.wine-btl-svg{
+  width:66px;height:auto;
+  transform:rotate(-10deg);
+  transform-origin:bottom center;
+  filter:drop-shadow(0 8px 22px rgba(123,31,58,.38));
 }
-.tl-mid{display:flex;flex-direction:column;align-items:center;width:20px;flex-shrink:0;}
-.tl-dot{
-  width:11px;height:11px;border-radius:50%;margin-top:5px;flex-shrink:0;
-  background:var(--accent);border:2px solid var(--gold);position:relative;z-index:1;
+.wine-drip{
+  width:3px;height:26px;
+  margin:0 auto;
+  background:linear-gradient(to bottom,#7B1F3A,rgba(123,31,58,.45));
+  border-radius:0 0 4px 4px;
 }
-.tl-dot.special{
-  width:14px;height:14px;background:var(--gold);
-  border-radius:2px;transform:rotate(45deg);margin-top:3px;
+.wine-timeline{display:flex;align-items:stretch;}
+.wine-track{
+  width:3px;flex-shrink:0;border-radius:2px;
+  background:rgba(184,146,74,.14);
+  position:relative;overflow:hidden;
 }
-.tl-connector{width:1.5px;flex:1;min-height:32px;background:linear-gradient(to bottom,rgba(184,146,74,.6),rgba(184,146,74,.2));}
-.tl-item:last-child .tl-connector{display:none;}
-.tl-body{padding-left:18px;padding-bottom:28px;}
-.tl-event{
-  font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:500;
-  color:var(--dark);margin-bottom:2px;line-height:1.25;
+.wine-fill{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,#7B1F3A 0%,#922A3E 50%,#B8924A 100%);
+  transform:scaleY(0);transform-origin:top;
+  border-radius:2px;
 }
-.tl-event.special{color:var(--accent);font-size:19px;}
-.tl-desc{font-family:'Lato',sans-serif;font-size:14px;color:var(--text);opacity:.72;line-height:1.5;}
+.wine-ev-list{flex:1;padding-left:22px;}
+.wine-ev{position:relative;padding-bottom:36px;}
+.wine-ev:last-child{padding-bottom:0;}
+.wine-dot{
+  position:absolute;left:-28.5px;top:6px;
+  width:11px;height:11px;border-radius:50%;box-sizing:border-box;
+  background:#7B1F3A;border:2.5px solid #B8924A;z-index:2;
+}
+.wine-dot.special{
+  background:#B8924A;border-radius:2px;
+  transform:rotate(45deg);
+  width:12px;height:12px;left:-29px;top:5px;
+}
+.wine-ev-time{
+  font-family:'Cormorant Garamond',serif;
+  font-size:12px;font-weight:600;color:var(--gold);
+  letter-spacing:2px;text-transform:uppercase;
+  line-height:1;margin-bottom:5px;
+}
+.wine-ev-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px;font-weight:500;color:var(--dark);
+  line-height:1.2;margin-bottom:4px;
+}
+.wine-ev-name.special{color:var(--accent);}
+.wine-ev-desc{
+  font-family:'Lato',sans-serif;
+  font-size:13px;color:var(--text);opacity:.7;line-height:1.5;
+}
 
 /* ── FRASES INSPIRACIONALES ── */
 .quote-sec{
@@ -918,41 +948,72 @@ footer .fc a{color:inherit;text-decoration:none;}
   <section class="rv" id="sitinerary">
     <div class="eyebrow">La Noche de Oly</div>
     <h2 class="sec-title">Itinerario</h2>
-    <div class="tl-wrap">
+    <div class="wine-tl-outer">
 
-      <div class="tl-item">
-        <div class="tl-time">8:00<br>pm</div>
-        <div class="tl-mid"><div class="tl-dot"></div><div class="tl-connector"></div></div>
-        <div class="tl-body">
-          <div class="tl-event">Recepción</div>
-          <div class="tl-desc">Puertas abiertas · Factory of Dreams Salón</div>
-        </div>
+      <!-- Botella decorativa -->
+      <div class="wine-top">
+        <svg class="wine-btl-svg" viewBox="0 0 56 170" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Corcho -->
+          <rect x="20" y="0" width="16" height="12" rx="3" fill="#C4A870"/>
+          <rect x="22" y="2" width="12" height="8" rx="2" fill="#D4BA80" opacity=".45"/>
+          <!-- Cuello -->
+          <path d="M21 11 L21 46 Q21 52 17 57 L39 57 Q35 52 35 46 L35 11 Z" fill="#621626"/>
+          <path d="M27 12 L27 49" stroke="rgba(255,255,255,.09)" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Hombro -->
+          <path d="M17 57 Q9 70 7 82 L49 82 Q47 70 39 57 Z" fill="#7B1F3A"/>
+          <!-- Cuerpo -->
+          <rect x="7" y="82" width="42" height="84" rx="5" fill="#7B1F3A"/>
+          <!-- Etiqueta -->
+          <rect x="11" y="90" width="34" height="52" rx="3" fill="#F5EDD8" opacity=".93"/>
+          <line x1="16" y1="98" x2="40" y2="98" stroke="#B8924A" stroke-width=".9" opacity=".55"/>
+          <text x="28" y="111" text-anchor="middle" font-family="Georgia,serif" font-size="8.5" fill="#7B1F3A" font-weight="bold">Oly</text>
+          <text x="28" y="121" text-anchor="middle" font-family="Georgia,serif" font-size="5.5" fill="#B8924A" letter-spacing="1">65 años</text>
+          <line x1="16" y1="126" x2="40" y2="126" stroke="#B8924A" stroke-width=".9" opacity=".55"/>
+          <text x="28" y="134" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" fill="#7B1F3A" letter-spacing="2">2026</text>
+          <!-- Reflejo -->
+          <path d="M13 86 L13 160" stroke="white" stroke-width="3.5" opacity=".07" stroke-linecap="round"/>
+        </svg>
       </div>
 
-      <div class="tl-item">
-        <div class="tl-time">9:00<br>pm</div>
-        <div class="tl-mid"><div class="tl-dot"></div><div class="tl-connector"></div></div>
-        <div class="tl-body">
-          <div class="tl-event">Cena</div>
-          <div class="tl-desc">Una velada especial para celebrar juntos</div>
-        </div>
-      </div>
+      <!-- Chorro de vino que conecta botella con la línea -->
+      <div class="wine-drip"></div>
 
-      <div class="tl-item">
-        <div class="tl-time">10:00<br>pm</div>
-        <div class="tl-mid"><div class="tl-dot special"></div><div class="tl-connector"></div></div>
-        <div class="tl-body">
-          <div class="tl-event special">¡Sorpresas!</div>
-          <div class="tl-desc">Una noche llena de momentos inolvidables</div>
+      <!-- Línea de vino + eventos -->
+      <div class="wine-timeline">
+        <div class="wine-track">
+          <div class="wine-fill" id="wineFill"></div>
         </div>
-      </div>
 
-      <div class="tl-item">
-        <div class="tl-time">1:00<br>am</div>
-        <div class="tl-mid"><div class="tl-dot"></div><div class="tl-connector"></div></div>
-        <div class="tl-body">
-          <div class="tl-event">Fiesta</div>
-          <div class="tl-desc">La fiesta se extiende hasta la 1:00 am</div>
+        <div class="wine-ev-list">
+
+          <div class="wine-ev">
+            <div class="wine-dot"></div>
+            <div class="wine-ev-time">8:00 pm</div>
+            <div class="wine-ev-name">Recepción</div>
+            <div class="wine-ev-desc">Puertas abiertas · Factory of Dreams Salón</div>
+          </div>
+
+          <div class="wine-ev">
+            <div class="wine-dot"></div>
+            <div class="wine-ev-time">9:00 pm</div>
+            <div class="wine-ev-name">Cena</div>
+            <div class="wine-ev-desc">Una velada especial para celebrar juntos</div>
+          </div>
+
+          <div class="wine-ev">
+            <div class="wine-dot special"></div>
+            <div class="wine-ev-time">10:00 pm</div>
+            <div class="wine-ev-name special">¡Sorpresas!</div>
+            <div class="wine-ev-desc">Una noche llena de momentos inolvidables</div>
+          </div>
+
+          <div class="wine-ev">
+            <div class="wine-dot"></div>
+            <div class="wine-ev-time">1:00 am</div>
+            <div class="wine-ev-name">Fiesta</div>
+            <div class="wine-ev-desc">La fiesta se extiende hasta la 1:00 am</div>
+          </div>
+
         </div>
       </div>
 
@@ -1488,6 +1549,16 @@ function initScrollReveal(){
       {y:36, opacity:0},
       {y:0, opacity:1, duration:1.3, ease:'power2.out',
        scrollTrigger:{trigger:el, start:'top 88%'}});
+  });
+  gsap.to('#wineFill',{
+    scaleY:1,
+    ease:'none',
+    scrollTrigger:{
+      trigger:'#sitinerary',
+      start:'top 62%',
+      end:'bottom 58%',
+      scrub:1.2
+    }
   });
 }
 
