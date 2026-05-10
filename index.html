@@ -546,9 +546,9 @@ footer .fc a{color:inherit;text-decoration:none;}
   color:var(--accent);margin-top:4px;
 }
 .ei-card-phrase{
-  font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:13px;letter-spacing:1px;color:var(--text);
-  opacity:.75;margin:0;
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(32px,9vw,40px);line-height:1.15;
+  color:var(--accent);margin:4px 0 2px;
 }
 .ei-card-date{
   font-family:'Cormorant Garamond',serif;font-weight:400;
@@ -613,7 +613,7 @@ footer .fc a{color:inherit;text-decoration:none;}
     <div class="ei-card-num" id="ei-num">65</div>
 
     <!-- Nombre -->
-    <div class="ei-card-name" id="ei-name">Olivia Fierro</div>
+    <div class="ei-card-name" id="ei-name">Oly Fierro</div>
 
     <!-- Línea -->
     <div class="ei-rule" id="ei-rule2">
@@ -627,7 +627,7 @@ footer .fc a{color:inherit;text-decoration:none;}
 
     <!-- Fecha y ciudad -->
     <div class="ei-card-date" id="ei-date" style="margin-top:14px;">26 · Junio · 2026</div>
-    <div class="ei-card-city" id="ei-city">Plaza Fimbres · 8:00 pm</div>
+    <div class="ei-card-city" id="ei-city">Factory of Dreams · 8:00 pm</div>
 
     <!-- Hint -->
     <p class="envelope-hint" id="env-hint">Toca para abrir</p>
@@ -739,17 +739,17 @@ footer .fc a{color:inherit;text-decoration:none;}
       <div class="lt">Recepción</div>
       <div class="ls">Fiesta de Cumpleaños</div>
       <div class="lh">8:00 pm</div>
-      <p style="margin-top:10px;">Plaza Fimbres</p>
+      <p style="margin-top:10px;">Factory of Dreams Salón</p>
       <p>Calz. Francisco L. Montejano S/N · Local 19</p>
       <p>Jardines del Valle, Mexicali, B.C.</p>
       <div class="map-wrap">
         <iframe
-          src="https://maps.google.com/maps?q=Plaza+Fimbres+Calzada+Francisco+L+Montejano+Mexicali&output=embed&z=16"
+          src="https://maps.google.com/maps?q=Factory+of+Dreams+Salon+Mexicali+Jardines+del+Valle&output=embed&z=16"
           width="100%" height="200" style="border:0;" loading="lazy"
           allowfullscreen referrerpolicy="no-referrer-when-downgrade"
-          title="Plaza Fimbres Mexicali"></iframe>
+          title="Factory of Dreams Salón Mexicali"></iframe>
       </div>
-      <a class="btn" href="https://maps.app.goo.gl/placeholder" target="_blank" rel="noopener">Cómo Llegar</a>
+      <a class="btn" href="https://maps.app.goo.gl/QGYmjgZtg81c3y6K9" target="_blank" rel="noopener">Cómo Llegar</a>
     </div>
   </section>
 
@@ -831,14 +831,15 @@ footer .fc a{color:inherit;text-decoration:none;}
           <path d="M32 48 Q37 44 46 47 L47 80 L53 80 L54 47 Q63 44 68 48 L70 84 L30 84 Z"/>
           <!-- Cinturón / lazo -->
           <rect x="30" y="82" width="40" height="7" rx="3" fill="#B8924A" opacity=".65"/>
-          <!-- Falda cocktail (más corta que ball gown — termina a 3/4) -->
-          <path d="M30 88 Q20 120 12 168 L88 168 Q80 120 70 88 Z"/>
+          <!-- Falda larga (cubre hasta los tobillos) -->
+          <path d="M30 88 Q16 130 6 196 L94 196 Q84 130 70 88 Z"/>
           <!-- Líneas de pliegue -->
-          <path d="M38 89 Q28 120 18 168" stroke="rgba(184,146,74,.28)" stroke-width="1.5" fill="none"/>
-          <path d="M50 89 L50 168"         stroke="rgba(184,146,74,.22)" stroke-width="1.5" fill="none"/>
-          <path d="M62 89 Q72 120 82 168" stroke="rgba(184,146,74,.28)" stroke-width="1.5" fill="none"/>
-          <!-- Piernas -->
-          <path d="M30 168 L36 198 L48 198 L50 176 L52 198 L64 198 L70 168 Z" opacity=".55"/>
+          <path d="M38 89 Q26 130 14 196" stroke="rgba(184,146,74,.28)" stroke-width="1.5" fill="none"/>
+          <path d="M50 89 L50 196"        stroke="rgba(184,146,74,.22)" stroke-width="1.5" fill="none"/>
+          <path d="M62 89 Q74 130 86 196" stroke="rgba(184,146,74,.28)" stroke-width="1.5" fill="none"/>
+          <!-- Zapatos (apenas visibles bajo la falda) -->
+          <ellipse cx="38" cy="197" rx="8" ry="2.5" opacity=".35"/>
+          <ellipse cx="62" cy="197" rx="8" ry="2.5" opacity=".35"/>
         </svg>
         <div class="dc-fig-name">Dama</div>
       </div>
@@ -1453,8 +1454,8 @@ function initDressCode(){
 ══════════════════════════════════════ */
 (function(){
   var t = encodeURIComponent('65 Años de Olivia Fierro · ¡Cumpliendo mis sueños!');
-  var d = encodeURIComponent('Celebración 65 Años · 8:00 PM — Plaza Fimbres, Jardines del Valle, Mexicali, B.C.');
-  var l = encodeURIComponent('Plaza Fimbres, Calz. Francisco L. Montejano S/N, Jardines del Valle, Mexicali, B.C.');
+  var d = encodeURIComponent('Celebración 65 Años · 8:00 PM — Factory of Dreams Salón, Jardines del Valle, Mexicali, B.C.');
+  var l = encodeURIComponent('Factory of Dreams Salón, Calz. Francisco L. Montejano S/N, Jardines del Valle, Mexicali, B.C.');
   document.getElementById('gcalBtn').href =
     'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+t+'&dates=20260627T030000Z/20260627T090000Z&details='+d+'&location='+l;
 })();
