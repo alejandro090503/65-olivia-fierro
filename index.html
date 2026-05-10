@@ -1310,17 +1310,18 @@ var prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
       onUpdate:function(self){ spawnWheelSparks(self.getVelocity()); }
     });
 
-    /* Rotación de la rueda al hacer scroll */
-    gsap.to(wheel, {
-      rotation: 360,
-      ease: 'none',
+    /* Rueda gira con scroll; imágenes contra-rotan para mantenerse verticales */
+    var wheelInners = wheel.querySelectorAll('.wheel-item-inner');
+    gsap.timeline({
       scrollTrigger:{
         trigger:'.gallery',
         start:'top bottom',
         end:'bottom top',
         scrub: 1.8
       }
-    });
+    })
+    .to(wheel,       { rotation:  360, ease:'none' }, 0)
+    .to(wheelInners, { rotation: -360, ease:'none' }, 0);
   }
 
   /* Lightbox */
