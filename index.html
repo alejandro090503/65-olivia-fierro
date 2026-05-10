@@ -401,21 +401,30 @@ section{padding:60px 26px;}
 /* ── ITINERARIO VINO ── */
 .wine-tl-outer{max-width:340px;margin:0 auto;padding:0 8px;}
 .wine-top{display:flex;justify-content:center;margin-bottom:0;}
+@keyframes wine-pour{
+  0%   {transform:rotate(6deg);}
+  40%  {transform:rotate(50deg);}
+  64%  {transform:rotate(50deg);}
+  100% {transform:rotate(6deg);}
+}
 .wine-btl-svg{
   width:66px;height:auto;
-  transform:rotate(-10deg);
   transform-origin:bottom center;
   filter:drop-shadow(0 8px 22px rgba(123,31,58,.38));
+  animation:wine-pour 3.4s ease-in-out infinite;
 }
 .wine-drip{
   width:3px;height:26px;
-  margin:0 auto;
   background:linear-gradient(to bottom,#7B1F3A,rgba(123,31,58,.45));
   border-radius:0 0 4px 4px;
 }
 .wine-timeline{display:flex;align-items:stretch;}
+.wine-track-col{
+  display:flex;flex-direction:column;align-items:center;
+  width:34px;flex-shrink:0;
+}
 .wine-track{
-  width:3px;flex-shrink:0;border-radius:2px;
+  width:3px;flex:1;border-radius:2px;
   background:rgba(184,146,74,.14);
   position:relative;overflow:hidden;
 }
@@ -425,18 +434,22 @@ section{padding:60px 26px;}
   transform:scaleY(0);transform-origin:top;
   border-radius:2px;
 }
-.wine-ev-list{flex:1;padding-left:22px;}
+.wine-glass-svg{
+  width:36px;height:auto;margin-top:8px;flex-shrink:0;
+  filter:drop-shadow(0 3px 10px rgba(123,31,58,.3));
+}
+.wine-ev-list{flex:1;padding-left:14px;}
 .wine-ev{position:relative;padding-bottom:36px;}
 .wine-ev:last-child{padding-bottom:0;}
 .wine-dot{
-  position:absolute;left:-28.5px;top:6px;
+  position:absolute;left:-37px;top:6px;
   width:11px;height:11px;border-radius:50%;box-sizing:border-box;
   background:#7B1F3A;border:2.5px solid #B8924A;z-index:2;
 }
 .wine-dot.special{
   background:#B8924A;border-radius:2px;
   transform:rotate(45deg);
-  width:12px;height:12px;left:-29px;top:5px;
+  width:12px;height:12px;left:-38px;top:5px;
 }
 .wine-ev-time{
   font-family:'Cormorant Garamond',serif;
@@ -975,13 +988,26 @@ footer .fc a{color:inherit;text-decoration:none;}
         </svg>
       </div>
 
-      <!-- Chorro de vino que conecta botella con la línea -->
-      <div class="wine-drip"></div>
-
       <!-- Línea de vino + eventos -->
       <div class="wine-timeline">
-        <div class="wine-track">
-          <div class="wine-fill" id="wineFill"></div>
+        <div class="wine-track-col">
+          <div class="wine-drip"></div>
+          <div class="wine-track">
+            <div class="wine-fill" id="wineFill"></div>
+          </div>
+          <!-- Copa al final de la línea -->
+          <svg class="wine-glass-svg" viewBox="0 0 40 72" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Copa / bowl -->
+            <path d="M5 5 L35 5 Q33 26 29 35 Q25 44 20 44 Q15 44 11 35 Q7 26 5 5 Z" fill="none" stroke="#B8924A" stroke-width="1.5" stroke-linejoin="round"/>
+            <!-- Vino dentro de la copa -->
+            <path d="M9 24 Q11 37 15 41 Q17.5 44 20 44 Q22.5 44 25 41 Q29 37 31 24 Z" fill="#7B1F3A" opacity=".75"/>
+            <!-- Reflejo en el vino -->
+            <path d="M12 29 Q13 37 16 40" stroke="rgba(255,255,255,.22)" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- Tallo -->
+            <line x1="20" y1="44" x2="20" y2="62" stroke="#B8924A" stroke-width="1.5"/>
+            <!-- Base -->
+            <path d="M8 63 L32 63" stroke="#B8924A" stroke-width="2" stroke-linecap="round"/>
+          </svg>
         </div>
 
         <div class="wine-ev-list">
