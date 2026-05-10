@@ -646,7 +646,7 @@ footer .fc a{color:inherit;text-decoration:none;}
 }
 .ei-card-phrase{
   font-family:'Great Vibes',cursive;
-  font-size:clamp(32px,9vw,40px);line-height:1.15;
+  font-size:clamp(20px,5.8vw,32px);line-height:1.2;
   color:var(--accent);margin:4px 0 2px;
 }
 .ei-card-date{
@@ -723,7 +723,7 @@ footer .fc a{color:inherit;text-decoration:none;}
 
     <!-- Frase -->
     <p class="ei-card-phrase" id="ei-phrase">Cumpliendo mis sueños</p>
-    <p class="ei-card-phrase">Acompáñame</p>
+    <p class="ei-card-phrase" id="ei-companion">Acompáñame</p>
 
     <!-- Fecha y ciudad -->
     <div class="ei-card-date" id="ei-date" style="margin-top:14px;">26 · Junio · 2026</div>
@@ -1450,6 +1450,7 @@ gsap.registerPlugin(ScrollTrigger);
   var numEl     = document.getElementById('ei-num');
   var nameEl    = document.getElementById('ei-name');
   var phrase    = document.getElementById('ei-phrase');
+  var companion = document.getElementById('ei-companion');
   var dateEl    = document.getElementById('ei-date');
   var cityEl    = document.getElementById('ei-city');
   var opened    = false;
@@ -1475,7 +1476,7 @@ gsap.registerPlugin(ScrollTrigger);
 
   /* ── Entrada ── */
   gsap.set(card,    {opacity:0, y:24, scale:0.94});
-  gsap.set([orn, eyebrow, rule1, rule2, numEl, nameEl, phrase, dateEl, cityEl, hint],
+  gsap.set([orn, eyebrow, rule1, rule2, numEl, nameEl, phrase, companion, dateEl, cityEl, hint],
            {opacity:0, y:12});
 
   var tl = gsap.timeline({delay:0.3});
@@ -1487,8 +1488,9 @@ gsap.registerPlugin(ScrollTrigger);
     .to(numEl,   {opacity:1, y:0, duration:0.9, ease:'power3.out'}, '-=0.3')
     .to(nameEl,  {opacity:1, y:0, duration:0.8, ease:'power2.out'}, '-=0.5')
     .to(rule2,   {opacity:1, y:0, duration:0.5, ease:'power2.out'}, '-=0.4')
-    .to(phrase,  {opacity:1, y:0, duration:0.6, ease:'power2.out'}, '-=0.3')
-    .to(dateEl,  {opacity:1, y:0, duration:0.5, ease:'power2.out'}, '-=0.3')
+    .to(phrase,    {opacity:1, y:0, duration:0.6, ease:'power2.out'}, '-=0.3')
+    .to(companion, {opacity:1, y:0, duration:0.7, ease:'power2.out'}, '+=0.18')
+    .to(dateEl,  {opacity:1, y:0, duration:0.5, ease:'power2.out'}, '-=0.25')
     .to(cityEl,  {opacity:1, y:0, duration:0.5, ease:'power2.out'}, '-=0.35')
     .to(hint,    {opacity:1, y:0, duration:0.6, ease:'power2.out'}, '-=0.2');
 
