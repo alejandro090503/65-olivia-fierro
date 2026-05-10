@@ -10,11 +10,11 @@
 <meta property="og:url"          content="https://65-olivia-fierro.vercel.app/">
 <meta property="og:title"        content="Olivia · 65 Años · 26 Junio 2026">
 <meta property="og:description"  content="¡Cumpliendo mis sueños! Celebra conmigo el 26 de junio en Mexicali.">
-<meta property="og:image"        content="https://65-olivia-fierro.vercel.app/sobre.png">
+<meta property="og:image"        content="https://65-olivia-fierro.vercel.app/header-inv.jpg">
 <meta property="og:image:width"  content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card"        content="summary_large_image">
-<meta name="twitter:image"       content="https://65-olivia-fierro.vercel.app/sobre.png">
+<meta name="twitter:image"       content="https://65-olivia-fierro.vercel.app/header-inv.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
@@ -1212,25 +1212,26 @@ gsap.registerPlugin(ScrollTrigger);
   gsap.to(hint, {opacity:.55, duration:1.2, ease:'sine.inOut', repeat:-1, yoyo:true, delay:4});
 
   /* ── Salida al tocar ── */
-  function revealInvitation(){
-    document.querySelector('.wrap').style.visibility = 'visible';
+  function openEnvelope(){
+    if(opened) return;
+    opened = true;
+    var wrap = document.querySelector('.wrap');
+    gsap.killTweensOf([card, hint, numEl, nameEl]);
+    /* card se aleja suavemente */
+    gsap.to(card, {scale:1.03, opacity:0, y:-20, duration:1.0, ease:'power2.inOut'});
+    /* la invitación aparece debajo, invisible al principio */
+    wrap.style.visibility = 'visible';
+    gsap.set(wrap, {opacity:0});
     audio.play().catch(function(){});
     playing = true;
     vinylDisc.classList.add('is-playing');
     fab.classList.add('is-playing');
     fab.setAttribute('aria-label','Pausar música');
     launchPage();
-    gsap.to(envFlash, {opacity:0, duration:1.4, ease:'power2.out',
-      onComplete(){ envFlash.style.display='none'; envScreen.style.display='none'; }});
-  }
-
-  function openEnvelope(){
-    if(opened) return;
-    opened = true;
-    gsap.killTweensOf([card, hint, numEl, nameEl]);
-    gsap.to(card,     {scale:1.04, opacity:0, y:-16, duration:0.55, ease:'power2.in'});
-    gsap.to(envFlash, {opacity:1, duration:0.5, delay:0.35, ease:'power2.in',
-      onComplete: revealInvitation});
+    /* dissolve lento: intro se esfuma, invitación aparece */
+    gsap.to(envScreen, {opacity:0, duration:2.4, delay:0.3, ease:'power1.inOut',
+      onComplete(){ envScreen.style.display='none'; }});
+    gsap.to(wrap,      {opacity:1, duration:2.2, delay:0.5, ease:'power1.inOut'});
   }
 
   envScreen.addEventListener('click', openEnvelope);
