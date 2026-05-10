@@ -404,9 +404,10 @@ section{padding:60px 26px;}
   padding:72px 32px;text-align:center;position:relative;overflow:hidden;
 }
 .quote-sec::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse 70% 60% at 50% 50%, rgba(184,146,74,.07) 0%, transparent 70%);
-  pointer-events:none;
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(to bottom,#F5EDD8 0%,transparent 22%,transparent 78%,#F5EDD8 100%),
+    radial-gradient(ellipse 70% 60% at 50% 50%,rgba(184,146,74,.07) 0%,transparent 70%);
 }
 .quote-glyph{
   font-family:'Cormorant Garamond',serif;font-size:110px;line-height:.5;
