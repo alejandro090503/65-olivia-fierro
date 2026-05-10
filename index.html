@@ -343,17 +343,40 @@ section{padding:60px 26px;}
   transition:border-color .3s;-webkit-appearance:none;
 }
 .rsvp-nombre-input:focus{border-color:var(--accent);outline:none;}
-.rsvp-select{
-  width:100%;padding:13px 14px;min-height:44px;margin-bottom:4px;
+.rsvp-stepper{
+  display:flex;align-items:stretch;
+  background:rgba(123,31,58,.04);border-radius:12px;
+  border:1px solid rgba(184,146,74,.35);overflow:hidden;margin:8px 0 16px;
+}
+.rsvp-step-btn{
+  width:56px;min-height:56px;background:transparent;border:none;cursor:pointer;
+  color:var(--accent);font-size:28px;font-family:'Cormorant Garamond',serif;
+  transition:background .2s;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.rsvp-step-btn:hover:not(:disabled){background:rgba(123,31,58,.08);}
+.rsvp-step-btn:disabled{opacity:.3;cursor:not-allowed;}
+.rsvp-step-val{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  border-left:1px solid rgba(184,146,74,.3);border-right:1px solid rgba(184,146,74,.3);
+  padding:10px 0;
+}
+.rsvp-step-num{
+  font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:500;
+  color:var(--dark);line-height:1;
+}
+.rsvp-step-sub{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:12px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-top:3px;
+}
+.rsvp-nombre-input{
+  width:100%;padding:13px 14px;min-height:44px;
   border:1px solid rgba(123,31,58,.2);border-radius:10px;
   background:#f7f4ef;font-family:'Lato',sans-serif;font-size:14px;
-  color:var(--text);outline:none;cursor:pointer;
-  appearance:none;-webkit-appearance:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B8924A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 14px center;
-  transition:border-color .3s;
+  color:var(--text);box-sizing:border-box;margin-bottom:8px;
+  transition:border-color .3s;-webkit-appearance:none;display:block;
 }
-.rsvp-select:focus{border-color:var(--accent);}
+.rsvp-nombre-input:focus{border-color:var(--accent);outline:none;}
 .btn-wa{
   display:flex;align-items:center;justify-content:center;
   width:100%;margin-top:20px;padding:16px;min-height:52px;
@@ -1027,58 +1050,98 @@ history.scrollRestoration='manual';
 gsap.registerPlugin(ScrollTrigger);
 
 /* ══════════════════════════════════════
-   RSVP — Sistema de pases por ?pases=N
+   RSVP — Stepper 1-10 con nombres dinámicos
 ══════════════════════════════════════ */
 (function initRsvp(){
-  var params = new URLSearchParams(window.location.search);
-  var raw   = parseInt(params.get('pases'), 10);
-  var pases = (!isNaN(raw) && raw >= 1 && raw <= 20) ? raw : 1;
-  var para  = params.get('para');
-  var container = document.getElementById('rsvp-fields');
-  var card      = document.getElementById('rsvp-card');
-  var btn       = document.getElementById('rsvpBtn');
+  var MAX  = 10;
+  var para = new URLSearchParams(window.location.search).get('para');
+  var container   = document.getElementById('rsvp-fields');
+  var card        = document.getElementById('rsvp-card');
+  var btn         = document.getElementById('rsvpBtn');
+  var count       = 1;
 
+  /* ── Label ── */
   var lbl = document.createElement('label');
   lbl.className = 'rsvp-label';
-  lbl.setAttribute('for','rPasesConf');
-  lbl.textContent = '¿Cuántas personas asistirán?';
-  var sel = document.createElement('select');
-  sel.id = 'rPasesConf';
-  sel.className = 'rsvp-select';
-  for(var i = 1; i <= pases; i++){
-    var opt = document.createElement('option');
-    opt.value = String(i);
-    opt.textContent = i === 1 ? '1 persona' : i + ' personas';
-    sel.appendChild(opt);
-  }
-  sel.value = String(pases);
+  lbl.style.marginTop = '0';
+  lbl.textContent = '¿Cuántos invitados irán?';
   container.appendChild(lbl);
-  container.appendChild(sel);
+
+  /* ── Stepper ── */
+  var stepper = document.createElement('div');
+  stepper.className = 'rsvp-stepper';
+  stepper.setAttribute('role','group');
+  stepper.setAttribute('aria-label','Número de invitados');
+  stepper.innerHTML =
+    '<button type="button" class="rsvp-step-btn" id="rsvpMinus" aria-label="Menos">−</button>'+
+    '<div class="rsvp-step-val">'+
+      '<span class="rsvp-step-num" id="rsvpCount">1</span>'+
+      '<span class="rsvp-step-sub" id="rsvpSub">persona</span>'+
+    '</div>'+
+    '<button type="button" class="rsvp-step-btn" id="rsvpPlus" aria-label="Más">+</button>';
+  container.appendChild(stepper);
+
+  var minusBtn  = document.getElementById('rsvpMinus');
+  var plusBtn   = document.getElementById('rsvpPlus');
+  var countEl   = document.getElementById('rsvpCount');
+  var subEl     = document.getElementById('rsvpSub');
+
+  /* ── Nombres ── */
+  var nombresLbl = document.createElement('label');
+  nombresLbl.className = 'rsvp-label';
+  nombresLbl.textContent = 'Nombres de quienes asistirán';
+  container.appendChild(nombresLbl);
 
   var nombresWrap = document.createElement('div');
   nombresWrap.id = 'rsvp-nombres-wrap';
   container.appendChild(nombresWrap);
 
-  function renderNombres(n){
-    nombresWrap.innerHTML = '';
-    if(n < 1) return;
-    var titulo = document.createElement('label');
-    titulo.className = 'rsvp-label';
-    titulo.textContent = 'Nombres de quienes asistirán';
-    nombresWrap.appendChild(titulo);
-    for(var i = 0; i < n; i++){
-      var inp = document.createElement('input');
-      inp.type = 'text';
-      inp.className = 'rsvp-nombre-input';
-      inp.placeholder = 'Persona ' + (i + 1);
-      inp.setAttribute('data-idx', String(i));
-      inp.autocomplete = 'off';
-      nombresWrap.appendChild(inp);
-    }
+  function addInput(idx, prefill){
+    var inp = document.createElement('input');
+    inp.type = 'text';
+    inp.className = 'rsvp-nombre-input';
+    inp.placeholder = 'Persona ' + (idx + 1);
+    inp.setAttribute('data-idx', String(idx));
+    inp.autocomplete = 'off';
+    inp.setAttribute('inputmode','text');
+    if(prefill) inp.value = prefill;
+    nombresWrap.appendChild(inp);
+    gsap.from(inp, {height:0, opacity:0, marginBottom:0, paddingTop:0, paddingBottom:0,
+      duration:0.28, ease:'power2.out', clearProps:'all'});
+    return inp;
   }
-  renderNombres(parseInt(sel.value, 10));
-  sel.addEventListener('change', function(){
-    renderNombres(parseInt(sel.value, 10));
+
+  function removeLastInput(){
+    var inputs = nombresWrap.querySelectorAll('.rsvp-nombre-input');
+    if(!inputs.length) return;
+    var last = inputs[inputs.length - 1];
+    gsap.to(last, {height:0, opacity:0, marginBottom:0, paddingTop:0, paddingBottom:0,
+      duration:0.22, ease:'power2.in',
+      onComplete: function(){ last.remove(); }});
+  }
+
+  function syncButtons(){
+    minusBtn.disabled = count <= 1;
+    plusBtn.disabled  = count >= MAX;
+    countEl.textContent = count;
+    subEl.textContent   = count === 1 ? 'persona' : 'personas';
+  }
+
+  /* ── Init con 1 input ── */
+  addInput(0, para || '');
+  syncButtons();
+
+  minusBtn.addEventListener('click', function(){
+    if(count <= 1) return;
+    count--;
+    syncButtons();
+    removeLastInput();
+  });
+  plusBtn.addEventListener('click', function(){
+    if(count >= MAX) return;
+    count++;
+    syncButtons();
+    addInput(count - 1);
   });
 
   function getNombres(){
@@ -1091,6 +1154,7 @@ gsap.registerPlugin(ScrollTrigger);
     return arr;
   }
 
+  /* ── Botón declinar ── */
   var decBtn = document.createElement('button');
   decBtn.type = 'button';
   decBtn.className = 'btn-decline';
@@ -1121,10 +1185,12 @@ gsap.registerPlugin(ScrollTrigger);
     .then(function(r){ return r.json(); })
     .then(function(d){
       if(d.ok){
-        btn.textContent  = estado === 'confirmado' ? '¡Confirmado! ✦' : 'Respuesta enviada ✦';
-        decBtn.style.display = 'none';
+        btn.textContent = estado === 'confirmado' ? '¡Confirmado! ✦' : 'Respuesta enviada ✦';
+        decBtn.style.display   = 'none';
+        stepper.style.display  = 'none';
         nombresWrap.style.display = 'none';
-        sel.disabled = true;
+        nombresLbl.style.display  = 'none';
+        lbl.style.display         = 'none';
       } else {
         btn.disabled = false; decBtn.disabled = false;
         btn.textContent = 'Confirmar';
@@ -1137,14 +1203,14 @@ gsap.registerPlugin(ScrollTrigger);
   }
 
   btn.addEventListener('click', function(){
-    var pasesConf = parseInt(sel.value, 10);
     var nombresArr = getNombres();
-    if(nombresArr.length < pasesConf){
-      errEl.textContent = 'Por favor escribe los nombres de las ' + pasesConf + ' persona' + (pasesConf === 1 ? '' : 's') + '.';
+    if(nombresArr.length < count){
+      errEl.textContent = 'Por favor escribe el nombre de ' +
+        (count === 1 ? 'la persona que asistirá.' : 'las ' + count + ' personas que asistirán.');
       errEl.style.display = 'block';
       return;
     }
-    post('confirmado', pasesConf, nombresArr);
+    post('confirmado', count, nombresArr);
   });
   decBtn.addEventListener('click', function(){
     post('declino', 0, []);
