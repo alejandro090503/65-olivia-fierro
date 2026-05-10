@@ -398,6 +398,33 @@ section{padding:60px 26px;}
 .btn-decline:hover{border-color:rgba(123,31,58,.6);}
 .rsvp-deadline{text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--text);margin-top:16px;}
 
+/* ── ITINERARIO ── */
+.tl-wrap{max-width:320px;margin:0 auto;}
+.tl-item{display:flex;align-items:flex-start;position:relative;}
+.tl-time{
+  width:78px;text-align:right;padding-right:18px;padding-top:3px;flex-shrink:0;
+  font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:1px;
+  color:var(--gold);font-weight:500;line-height:1.2;
+}
+.tl-mid{display:flex;flex-direction:column;align-items:center;width:20px;flex-shrink:0;}
+.tl-dot{
+  width:11px;height:11px;border-radius:50%;margin-top:5px;flex-shrink:0;
+  background:var(--accent);border:2px solid var(--gold);position:relative;z-index:1;
+}
+.tl-dot.special{
+  width:14px;height:14px;background:var(--gold);
+  border-radius:2px;transform:rotate(45deg);margin-top:3px;
+}
+.tl-connector{width:1.5px;flex:1;min-height:32px;background:linear-gradient(to bottom,rgba(184,146,74,.6),rgba(184,146,74,.2));}
+.tl-item:last-child .tl-connector{display:none;}
+.tl-body{padding-left:18px;padding-bottom:28px;}
+.tl-event{
+  font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:500;
+  color:var(--dark);margin-bottom:2px;line-height:1.25;
+}
+.tl-event.special{color:var(--accent);font-size:19px;}
+.tl-desc{font-family:'Lato',sans-serif;font-size:14px;color:var(--text);opacity:.72;line-height:1.5;}
+
 /* ── FRASES INSPIRACIONALES ── */
 .quote-sec{
   background:linear-gradient(160deg,#2E0E18 0%,#1A080F 100%);
@@ -882,6 +909,42 @@ footer .fc a{color:inherit;text-decoration:none;}
           <ellipse cx="62" cy="197" rx="8" ry="2.5" opacity=".35"/>
         </svg>
         <div class="dc-fig-name">Dama</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ITINERARIO -->
+  <section class="rv" id="sitinerary">
+    <div class="eyebrow">La Noche de Oly</div>
+    <h2 class="sec-title">Itinerario</h2>
+    <div class="tl-wrap">
+
+      <div class="tl-item">
+        <div class="tl-time">8:00<br>pm</div>
+        <div class="tl-mid"><div class="tl-dot"></div><div class="tl-connector"></div></div>
+        <div class="tl-body">
+          <div class="tl-event">Llegada y Bienvenida</div>
+          <div class="tl-desc">Puertas abiertas · Factory of Dreams Salón</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time">9:00<br>pm</div>
+        <div class="tl-mid"><div class="tl-dot"></div><div class="tl-connector"></div></div>
+        <div class="tl-body">
+          <div class="tl-event">Cena</div>
+          <div class="tl-desc">Una velada especial para celebrar juntos</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time">10:00<br>pm</div>
+        <div class="tl-mid"><div class="tl-dot special"></div><div class="tl-connector"></div></div>
+        <div class="tl-body">
+          <div class="tl-event special">¡Sorpresas!</div>
+          <div class="tl-desc">Una noche llena de momentos inolvidables</div>
+        </div>
       </div>
 
     </div>
