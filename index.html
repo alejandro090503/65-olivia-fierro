@@ -1423,7 +1423,39 @@ gsap.registerPlugin(ScrollTrigger);
       errEl.style.display = 'block';
       return;
     }
-    post('confirmado', count, nombresArr);
+    errEl.style.display = 'none';
+
+    /* ── Construir mensaje de WhatsApp ── */
+    var lista = nombresArr.join(', ');
+    var msg = '¡Hola! Confirmo mi asistencia a la celebración de 65 años de Oly Fierro 🎉\n' +
+      'Fecha: 26 de junio · 8:00 pm — Factory of Dreams Salón\n' +
+      (nombresArr.length === 1
+        ? 'Asistiré: ' + lista
+        : 'Asistiremos (' + nombresArr.length + '): ' + lista) +
+      '\n¡Nos vemos esa noche! 🥂';
+    window.open('https://wa.me/5268611952303?text=' + encodeURIComponent(msg), '_blank');
+
+    /* ── Mostrar estado confirmado en UI ── */
+    btn.textContent = '¡Confirmado! ✦';
+    btn.disabled = true;
+    decBtn.style.display      = 'none';
+    stepper.style.display     = 'none';
+    nombresWrap.style.display = 'none';
+    nombresLbl.style.display  = 'none';
+    lbl.style.display         = 'none';
+
+    /* ── Registrar en el panel (silencioso) ── */
+    fetch('https://panel-invitados.vercel.app/api/confirmar', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        nombre:              para || 'Invitado',
+        estado:              'confirmado',
+        pases_confirmados:   count,
+        nombres_confirmados: nombresArr,
+        url_boda:            'https://65-olivia-fierro.vercel.app'
+      })
+    }).catch(function(){});
   });
   decBtn.addEventListener('click', function(){
     post('declino', 0, []);
