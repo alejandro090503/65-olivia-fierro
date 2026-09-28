@@ -1223,16 +1223,22 @@ footer .fc a{color:inherit;text-decoration:none;}
     </svg>
   </div>
 
-  <!-- RSVP -->
+  <!-- RSVP cerrado -->
   <section class="rv" id="srsvp">
-    <div class="eyebrow">Confirma tu Asistencia</div>
+    <div class="eyebrow">Confirmación de Asistencia</div>
     <h2 class="sec-title">R.S.V.P.</h2>
-    <div class="rsvp-card" id="rsvp-card">
-      <div id="rsvp-fields"></div>
-      <button class="btn-wa" id="rsvpBtn" aria-label="Confirmar asistencia">
-        Confirmar
-      </button>
-      <p class="rsvp-deadline">Fecha límite: 13 de junio de 2026</p>
+    <div class="rsvp-card" id="rsvp-card" style="text-align:center;padding:36px 24px;">
+      <div style="font-size:32px;margin-bottom:16px;">🥂</div>
+      <p style="font-family:'Great Vibes',cursive;font-size:28px;color:var(--accent);margin-bottom:16px;line-height:1.3;">
+        ¡Gracias por confirmar!
+      </p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--text);line-height:1.75;max-width:300px;margin:0 auto 20px;">
+        El período de confirmación de asistencia ha concluido. Agradecemos profundamente a quienes se tomaron el momento de responder — su presencia hace esta celebración aún más especial.
+      </p>
+      <div style="width:48px;height:1px;background:var(--gold);margin:0 auto 20px;opacity:.6;"></div>
+      <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--gold);letter-spacing:1px;">
+        Nos vemos el 26 de junio · 8:00 pm
+      </p>
     </div>
   </section>
 
@@ -1261,206 +1267,6 @@ footer .fc a{color:inherit;text-decoration:none;}
 window.scrollTo(0,0);
 history.scrollRestoration='manual';
 gsap.registerPlugin(ScrollTrigger);
-
-/* ══════════════════════════════════════
-   RSVP — Stepper 1-10 con nombres dinámicos
-══════════════════════════════════════ */
-(function initRsvp(){
-  var MAX  = 10;
-  var para = new URLSearchParams(window.location.search).get('para');
-  var container   = document.getElementById('rsvp-fields');
-  var card        = document.getElementById('rsvp-card');
-  var btn         = document.getElementById('rsvpBtn');
-  var count       = 1;
-
-  /* ── Label ── */
-  var lbl = document.createElement('label');
-  lbl.className = 'rsvp-label';
-  lbl.style.marginTop = '0';
-  lbl.textContent = '¿Cuántos invitados irán?';
-  container.appendChild(lbl);
-
-  /* ── Stepper ── */
-  var stepper = document.createElement('div');
-  stepper.className = 'rsvp-stepper';
-  stepper.setAttribute('role','group');
-  stepper.setAttribute('aria-label','Número de invitados');
-  stepper.innerHTML =
-    '<button type="button" class="rsvp-step-btn" id="rsvpMinus" aria-label="Menos">−</button>'+
-    '<div class="rsvp-step-val">'+
-      '<span class="rsvp-step-num" id="rsvpCount">1</span>'+
-      '<span class="rsvp-step-sub" id="rsvpSub">persona</span>'+
-    '</div>'+
-    '<button type="button" class="rsvp-step-btn" id="rsvpPlus" aria-label="Más">+</button>';
-  container.appendChild(stepper);
-
-  var minusBtn  = document.getElementById('rsvpMinus');
-  var plusBtn   = document.getElementById('rsvpPlus');
-  var countEl   = document.getElementById('rsvpCount');
-  var subEl     = document.getElementById('rsvpSub');
-
-  /* ── Nombres ── */
-  var nombresLbl = document.createElement('label');
-  nombresLbl.className = 'rsvp-label';
-  nombresLbl.textContent = 'Nombres de quienes asistirán';
-  container.appendChild(nombresLbl);
-
-  var nombresWrap = document.createElement('div');
-  nombresWrap.id = 'rsvp-nombres-wrap';
-  container.appendChild(nombresWrap);
-
-  function addInput(idx, prefill){
-    var inp = document.createElement('input');
-    inp.type = 'text';
-    inp.className = 'rsvp-nombre-input';
-    inp.placeholder = 'Nombre ' + (idx + 1);
-    inp.setAttribute('data-idx', String(idx));
-    inp.autocomplete = 'off';
-    inp.setAttribute('inputmode','text');
-    if(prefill) inp.value = prefill;
-    nombresWrap.appendChild(inp);
-    gsap.from(inp, {height:0, opacity:0, marginBottom:0, paddingTop:0, paddingBottom:0,
-      duration:0.28, ease:'power2.out', clearProps:'all'});
-    return inp;
-  }
-
-  function removeLastInput(){
-    var inputs = nombresWrap.querySelectorAll('.rsvp-nombre-input');
-    if(!inputs.length) return;
-    var last = inputs[inputs.length - 1];
-    gsap.to(last, {height:0, opacity:0, marginBottom:0, paddingTop:0, paddingBottom:0,
-      duration:0.22, ease:'power2.in',
-      onComplete: function(){ last.remove(); }});
-  }
-
-  function syncButtons(){
-    minusBtn.disabled = count <= 1;
-    plusBtn.disabled  = count >= MAX;
-    countEl.textContent = count;
-    subEl.textContent   = count === 1 ? 'persona' : 'personas';
-  }
-
-  /* ── Init con 1 input ── */
-  addInput(0, para || '');
-  syncButtons();
-
-  minusBtn.addEventListener('click', function(){
-    if(count <= 1) return;
-    count--;
-    syncButtons();
-    removeLastInput();
-  });
-  plusBtn.addEventListener('click', function(){
-    if(count >= MAX) return;
-    count++;
-    syncButtons();
-    addInput(count - 1);
-  });
-
-  function getNombres(){
-    var inputs = nombresWrap.querySelectorAll('.rsvp-nombre-input');
-    var arr = [];
-    for(var i = 0; i < inputs.length; i++){
-      var v = (inputs[i].value || '').trim();
-      if(v) arr.push(v);
-    }
-    return arr;
-  }
-
-  /* ── Botón declinar ── */
-  var decBtn = document.createElement('button');
-  decBtn.type = 'button';
-  decBtn.className = 'btn-decline';
-  decBtn.textContent = 'No podré asistir';
-  var deadline = card.querySelector('.rsvp-deadline');
-  card.insertBefore(decBtn, deadline);
-
-  var errEl = document.createElement('p');
-  errEl.style.cssText = 'color:#b91c1c;font-size:13px;text-align:center;margin-top:10px;display:none;';
-  card.insertBefore(errEl, deadline);
-
-  function post(estado, pasesConf, nombresArr){
-    errEl.style.display = 'none';
-    btn.disabled = true;
-    decBtn.disabled = true;
-    btn.textContent = 'Enviando…';
-    fetch('https://panel-invitados.vercel.app/api/confirmar', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        nombre:              para || 'Invitado',
-        estado:              estado,
-        pases_confirmados:   pasesConf,
-        nombres_confirmados: nombresArr || [],
-        url_boda:            'https://65-olivia-fierro.vercel.app'
-      })
-    })
-    .then(function(r){ return r.json(); })
-    .then(function(d){
-      if(d.ok){
-        btn.textContent = estado === 'confirmado' ? '¡Confirmado! ✦' : 'Respuesta enviada ✦';
-        decBtn.style.display   = 'none';
-        stepper.style.display  = 'none';
-        nombresWrap.style.display = 'none';
-        nombresLbl.style.display  = 'none';
-        lbl.style.display         = 'none';
-      } else {
-        btn.disabled = false; decBtn.disabled = false;
-        btn.textContent = 'Confirmar';
-      }
-    })
-    .catch(function(){
-      btn.disabled = false; decBtn.disabled = false;
-      btn.textContent = 'Confirmar';
-    });
-  }
-
-  btn.addEventListener('click', function(){
-    var nombresArr = getNombres();
-    if(nombresArr.length < count){
-      errEl.textContent = 'Por favor escribe el nombre de ' +
-        (count === 1 ? 'la persona que asistirá.' : 'las ' + count + ' personas que asistirán.');
-      errEl.style.display = 'block';
-      return;
-    }
-    errEl.style.display = 'none';
-
-    /* ── Construir mensaje de WhatsApp ── */
-    var lista = nombresArr.join(', ');
-    var msg = '¡Hola! Confirmo mi asistencia a la celebración de 65 años de Oly Fierro 🎉\n' +
-      'Fecha: 26 de junio · 8:00 pm — Factory of Dreams Salón\n' +
-      (nombresArr.length === 1
-        ? 'Asistiré: ' + lista
-        : 'Asistiremos (' + nombresArr.length + '): ' + lista) +
-      '\n¡Nos vemos esa noche! 🥂';
-    window.open('https://wa.me/6861195303?text=' + encodeURIComponent(msg), '_blank');
-
-    /* ── Mostrar estado confirmado en UI ── */
-    btn.textContent = '¡Confirmado! ✦';
-    btn.disabled = true;
-    decBtn.style.display      = 'none';
-    stepper.style.display     = 'none';
-    nombresWrap.style.display = 'none';
-    nombresLbl.style.display  = 'none';
-    lbl.style.display         = 'none';
-
-    /* ── Registrar en el panel (silencioso) ── */
-    fetch('https://panel-invitados.vercel.app/api/confirmar', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        nombre:              para || 'Invitado',
-        estado:              'confirmado',
-        pases_confirmados:   count,
-        nombres_confirmados: nombresArr,
-        url_boda:            'https://65-olivia-fierro.vercel.app'
-      })
-    }).catch(function(){});
-  });
-  decBtn.addEventListener('click', function(){
-    post('declino', 0, []);
-  });
-})();
 
 /* ══════════════════════════════════════
    INTRO ANIMATION
@@ -1860,6 +1666,34 @@ fab.addEventListener('click', function(){
     fab.setAttribute('aria-label','Pausar música');
   }
 });
+</script>
+<script>
+/* ELYSIUM AUDIO UNLOCK v1 — la musica se estrena DENTRO del primer gesto real del invitado.
+   iOS/Chrome retiran el permiso del gesto a los pocos ms, asi que un play() que corre al
+   terminar el video del sobre llega tarde y es rechazado en silencio. */
+(function(){
+  if(window.__elyAudioUnlock) return; window.__elyAudioUnlock=1;
+  var done=false, tries=0;
+  function A(){ return document.querySelector('audio'); }
+  function unlock(){
+    if(done) return;
+    var a=A(); if(!a) return;
+    try{ if(a.preload==='none'){ a.preload='auto'; a.load(); } }catch(e){}
+    if(!a.paused){ done=true; return; }
+    var p;
+    try{ p=a.play(); }catch(e){ return; }
+    if(p && p.then){ p.then(function(){ done=true; }).catch(function(){}); }
+    else { done=true; }
+  }
+  ['pointerdown','touchstart','touchend','click','keydown'].forEach(function(ev){
+    document.addEventListener(ev, unlock, {capture:true, passive:true});
+  });
+  var iv=setInterval(function(){
+    var a=A();
+    if(done || (a && !a.paused)){ done=true; clearInterval(iv); return; }
+    if(++tries>120) clearInterval(iv);
+  },1000);
+})();
 </script>
 </body>
 </html>
